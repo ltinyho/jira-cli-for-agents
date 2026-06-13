@@ -24,8 +24,8 @@ type Config struct {
 
 const (
 	// ConfigDirName is the name of the config directory
-	ConfigDirName = ".jcfa"
-	// ConfigFileName is the name of the config file
+	ConfigDirName = ".jira-cli"
+	// ConfigFileName is the config file name
 	ConfigFileName = "config.yaml"
 	// ConfigFilePerms is the file permission for the config file (read/write for owner only)
 	ConfigFilePerms = 0600
@@ -65,7 +65,7 @@ func LoadFromPath(configPath string) (*Config, error) {
 	data, err := os.ReadFile(configPath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return nil, fmt.Errorf("config file not found at %s. Run 'jcfa configure' to set up", configPath)
+			return nil, fmt.Errorf("config file not found at %s. Run 'jira-cli configure' to set up", configPath)
 		}
 		return nil, fmt.Errorf("failed to read config file: %w", err)
 	}

@@ -8,7 +8,7 @@ import (
 )
 
 // commentCmd maintains backward compatibility
-// Old syntax: jcfa comment PROJ-123 "text"
+// Old syntax: jira-cli comment PROJ-123 "text"
 // Routes to the new comments add subcommand
 var commentCmd = &cobra.Command{
 	Use:   "comment <issue-key> \"<text>\"",
@@ -16,14 +16,14 @@ var commentCmd = &cobra.Command{
 	Long: `Add a text comment to an existing Jira issue.
 
 This is a legacy command maintained for backward compatibility.
-Use 'jcfa comments' for more advanced comment operations.
+Use 'jira-cli comments' for more advanced comment operations.
 
 Examples:
-  jcfa comment PROJ-123 "This is a comment"
-  jcfa comment PROJ-123 "Updated the implementation" --json
+  jira-cli comment PROJ-123 "This is a comment"
+  jira-cli comment PROJ-123 "Updated the implementation" --json
 
 For more options, see:
-  jcfa comments --help`,
+  jira-cli comments --help`,
 	Args: cobra.ExactArgs(2),
 	RunE: runComment,
 }

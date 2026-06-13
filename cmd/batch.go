@@ -90,16 +90,16 @@ Use @<id> to reference other issues in the batch (e.g., "@epic1" links to the ep
 
 Examples:
   # Create issues from a file
-  jcfa batch create issues.json
+  jira-cli batch create issues.json
 
   # Dry run to validate
-  jcfa batch create issues.json --dry-run
+  jira-cli batch create issues.json --dry-run
 
   # Disable progress bar
-  jcfa batch create issues.json --no-progress
+  jira-cli batch create issues.json --no-progress
 
   # JSON output
-  jcfa batch create issues.json --json
+  jira-cli batch create issues.json --json
 `,
 	Args: cobra.ExactArgs(1),
 	RunE: runBatchCreate,
@@ -127,7 +127,7 @@ func runBatchCreate(cmd *cobra.Command, args []string) error {
 	}
 
 	// Initialize services
-	templateService := template.NewService(filepath.Join(os.Getenv("HOME"), ".jcfa", "templates"))
+	templateService := template.NewService(filepath.Join(os.Getenv("HOME"), ".jira-cli", "templates"))
 	issueService := jira.NewIssueService(jiraClient)
 	linkService := jira.NewLinkService(jiraClient)
 

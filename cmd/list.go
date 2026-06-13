@@ -22,10 +22,10 @@ var listCmd = &cobra.Command{
 By default, lists recent issues for the current user.
 
 Examples:
-  jcfa list
-  jcfa list --project PROJ
-  jcfa list --assignee john@example.com --status "In Progress"
-  jcfa list --limit 10 --json`,
+  jira-cli list
+  jira-cli list --project PROJ
+  jira-cli list --assignee john@example.com --status "In Progress"
+  jira-cli list --limit 10 --json`,
 	RunE: runList,
 }
 

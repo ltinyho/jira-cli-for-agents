@@ -5,27 +5,27 @@
       "id": 1,
       "name": "list-recent-issues",
       "prompt": "查一下我最近在 IN 项目处理的 Jira 任务",
-      "expected_output": "给出 jcfa list 或 jcfa search 命令，包含正确的命令语法和示例",
+      "expected_output": "给出 jira-cli list 或 jira-cli search 命令，包含正确的命令语法和示例",
       "files": []
     },
     {
       "id": 2,
       "name": "create-bug",
-      "prompt": "用 jcfa 帮我创建一个 bug，标题是 \"组包依赖校验问题\"，优先级 High",
-      "expected_output": "给出 jcfa create 命令，提到 JSON 数据格式或 --template 选项",
+      "prompt": "用 jira-cli 帮我创建一个 bug，标题是 \"组包依赖校验问题\"，优先级 High",
+      "expected_output": "给出 jira-cli create 命令，提到 JSON 数据格式或 --template 选项",
       "files": []
     },
     {
       "id": 3,
       "name": "jql-keyword-quote",
-      "prompt": "jcfa search 报错 'Error in JQL Query: Expecting either a value, list or function but got IN'，怎么解决？",
+      "prompt": "jira-cli search 报错 'Error in JQL Query: Expecting either a value, list or function but got IN'，怎么解决？",
       "expected_output": "明确指出 DC 8.x 的 JQL 关键字需要加引号，并给出修正后的命令示例",
       "files": []
     },
     {
       "id": 4,
       "name": "install-and-configure",
-      "prompt": "新同事要装 jcfa 操作 westwell-lab 的 jira，怎么搞？",
+      "prompt": "新同事要装 jira-cli 操作 westwell-lab 的 jira，怎么搞？",
       "expected_output": "说明需要从 fork 仓库 git clone、build、配置 auth_type: bearer、给出最小化 config.yaml",
       "files": []
     }

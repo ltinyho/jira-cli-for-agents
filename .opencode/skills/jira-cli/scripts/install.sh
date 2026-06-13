@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# install.sh — 构建并安装 jira-cli-for-agents (DC fork) 到指定目录
+# install.sh — 构建并安装 jira-cli (DC fork) 到指定目录
 #
 # 用法:
 #   ./scripts/install.sh                          # 默认安装到 ~/.local/bin
@@ -35,7 +35,7 @@ usage() {
 
 # 默认值
 BIN_DIR="${HOME}/.local/bin"
-BIN_NAME="jira-cli-for-agents"
+BIN_NAME="jira-cli"
 
 # 解析参数
 while [[ $# -gt 0 ]]; do
@@ -77,7 +77,7 @@ log_ok "检测到 Go $GO_VERSION"
 
 # 2. 验证仓库结构
 if [[ ! -f "$REPO_ROOT/go.mod" ]]; then
-    log_error "在 $REPO_ROOT 未找到 go.mod，这不是 jcfa 仓库"
+    log_error "在 $REPO_ROOT 未找到 go.mod，这不是 jira-cli 仓库"
     exit 1
 fi
 
@@ -89,7 +89,7 @@ fi
 
 # 4. 构建
 VERSION="1.4.0-dc"
-LDFLAGS="-X 'github.com/sanisideup/jira-cli-for-agents/cmd.Version=$VERSION'"
+LDFLAGS="-X 'github.com/sanisideup/jira-cli/cmd.Version=$VERSION'"
 
 log_info "开始构建..."
 cd "$REPO_ROOT"
@@ -119,8 +119,8 @@ if ! command -v "$BIN_NAME" >/dev/null 2>&1; then
 fi
 
 # 7. 配置提示
-if [[ ! -f "$HOME/.jcfa/config.yaml" ]]; then
-    log_warn "未找到配置文件: ~/.jcfa/config.yaml"
+if [[ ! -f "$HOME/.jira-cli/config.yaml" ]]; then
+    log_warn "未找到配置文件: ~/.jira-cli/config.yaml"
     echo
     echo "  请参考 SKILL.md 中的'配置'章节创建配置文件"
     echo "  最小化配置示例:"

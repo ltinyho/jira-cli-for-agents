@@ -34,13 +34,13 @@ var fieldsListCmd = &cobra.Command{
 	Long: `List all available Jira fields including standard and custom fields.
 Output can be filtered by project and formatted as JSON or human-readable table.`,
 	Example: `  # List all fields
-  jcfa fields list
+  jira-cli fields list
 
   # List fields for a specific project
-  jcfa fields list --project PROJ
+  jira-cli fields list --project PROJ
 
   # Output as JSON
-  jcfa fields list --json`,
+  jira-cli fields list --json`,
 	RunE: runFieldsList,
 }
 
@@ -51,12 +51,12 @@ var fieldsMapCmd = &cobra.Command{
 	Long: `Map a custom field ID to a human-readable alias.
 This makes it easier to reference custom fields in other commands.
 
-The field ID must exist in your Jira instance. Use 'jcfa fields list' to find field IDs.`,
+The field ID must exist in your Jira instance. Use 'jira-cli fields list' to find field IDs.`,
 	Example: `  # Map story_points to customfield_10016
-  jcfa fields map story_points customfield_10016
+  jira-cli fields map story_points customfield_10016
 
   # Map epic_link to customfield_10014
-  jcfa fields map epic_link customfield_10014`,
+  jira-cli fields map epic_link customfield_10014`,
 	Args: cobra.ExactArgs(2),
 	RunE: runFieldsMap,
 }

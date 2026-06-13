@@ -23,7 +23,7 @@ var templateCmd = &cobra.Command{
 var templateInitCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize templates by copying defaults to user directory",
-	Long: `Copies default issue templates (epic, story, bug, charter) to ~/.jcfa/templates/
+	Long: `Copies default issue templates (epic, story, bug, charter) to ~/.jira-cli/templates/
 for customization. Existing templates will not be overwritten.`,
 	RunE: runTemplateInit,
 }
@@ -93,7 +93,7 @@ func runTemplateList(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(templates) == 0 {
-		fmt.Println("No templates found. Run 'jcfa template init' to initialize default templates.")
+		fmt.Println("No templates found. Run 'jira-cli template init' to initialize default templates.")
 		return nil
 	}
 

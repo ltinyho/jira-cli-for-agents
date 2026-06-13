@@ -34,22 +34,22 @@ Subtask Creation:
 
 Examples:
   # Create from template and data file
-  jcfa create --template story --data story.json
+  jira-cli create --template story --data story.json
 
   # Create with dry-run to validate
-  jcfa create --template story --data story.json --dry-run
+  jira-cli create --template story --data story.json --dry-run
 
   # Create with JSON output
-  jcfa create --template story --data story.json --json
+  jira-cli create --template story --data story.json --json
 
   # Read data from stdin
-  cat story.json | jcfa create --template story --data -
+  cat story.json | jira-cli create --template story --data -
 
   # Create a subtask under a parent issue
-  jcfa create --template subtask --data task.json --parent PROJ-123
+  jira-cli create --template subtask --data task.json --parent PROJ-123
 
   # Create subtask interactively
-  jcfa create --template subtask --interactive --parent PROJ-123
+  jira-cli create --template subtask --interactive --parent PROJ-123
 `,
 	RunE: runCreate,
 }
@@ -73,7 +73,7 @@ func runCreate(cmd *cobra.Command, args []string) error {
 	}
 
 	// Initialize services
-	templateService := template.NewService(filepath.Join(os.Getenv("HOME"), ".jcfa", "templates"))
+	templateService := template.NewService(filepath.Join(os.Getenv("HOME"), ".jira-cli", "templates"))
 	issueService := jira.NewIssueService(jiraClient)
 
 	// Load template

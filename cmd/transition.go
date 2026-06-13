@@ -16,8 +16,8 @@ The status name is case-insensitive. If the specified status is not available
 for the issue, the command will show available transitions.
 
 Examples:
-  jcfa transition PROJ-123 "In Progress"
-  jcfa transition PROJ-123 "Done" --json`,
+  jira-cli transition PROJ-123 "In Progress"
+  jira-cli transition PROJ-123 "Done" --json`,
 	Args: cobra.ExactArgs(2),
 	RunE: runTransition,
 }

@@ -19,9 +19,9 @@ var searchCmd = &cobra.Command{
 	Long: `Search for Jira issues using Jira Query Language (JQL).
 
 Examples:
-  jcfa search "project = PROJ AND status = Open"
-  jcfa search "assignee = currentUser() ORDER BY updated DESC" --limit 20
-  jcfa search "project = PROJ AND type = Story" --json`,
+  jira-cli search "project = PROJ AND status = Open"
+  jira-cli search "assignee = currentUser() ORDER BY updated DESC" --limit 20
+  jira-cli search "project = PROJ AND type = Story" --json`,
 	Args: cobra.ExactArgs(1),
 	RunE: runSearch,
 }

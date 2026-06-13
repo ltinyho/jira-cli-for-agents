@@ -48,7 +48,7 @@ Subcommands:
   delete  - Delete a link by ID
 
 For backward compatibility, you can still use:
-  jcfa link PROJ-123 PROJ-456 --type Blocks`,
+  jira-cli link PROJ-123 PROJ-456 --type Blocks`,
 	Args: cobra.ArbitraryArgs,
 	RunE: runLinkLegacy,
 }
@@ -75,9 +75,9 @@ Common link types:
   - Epic: Link a story to an epic
 
 Examples:
-  jcfa link create PROJ-123 PROJ-456 --type Blocks
-  jcfa link create PROJ-123 PROJ-456 --type Relates
-  jcfa link create PROJ-100 PROJ-101 --type Epic --json`,
+  jira-cli link create PROJ-123 PROJ-456 --type Blocks
+  jira-cli link create PROJ-123 PROJ-456 --type Relates
+  jira-cli link create PROJ-100 PROJ-101 --type Epic --json`,
 	Args: cobra.ExactArgs(2),
 	RunE: runLinkCreate,
 }
@@ -96,8 +96,8 @@ Each link type has an inward and outward description that describes
 the relationship direction between issues.
 
 Examples:
-  jcfa link types
-  jcfa link types --json`,
+  jira-cli link types
+  jira-cli link types --json`,
 	Args: cobra.NoArgs,
 	RunE: runLinkTypes,
 }
@@ -115,8 +115,8 @@ var linkListCmd = &cobra.Command{
 Shows the link ID (for deletion), direction, link type, and linked issue details.
 
 Examples:
-  jcfa link list PROJ-123
-  jcfa link list PROJ-123 --json`,
+  jira-cli link list PROJ-123
+  jira-cli link list PROJ-123 --json`,
 	Args: cobra.ExactArgs(1),
 	RunE: runLinkList,
 }
@@ -131,12 +131,12 @@ var linkDeleteCmd = &cobra.Command{
 	Short: "Delete a link by ID",
 	Long: `Delete an issue link by its ID.
 
-You can find link IDs using 'jcfa link list <issue-key>'.
+You can find link IDs using 'jira-cli link list <issue-key>'.
 Requires --confirm flag for safety.
 
 Examples:
-  jcfa link delete 10234 --confirm
-  jcfa link delete 10234 --confirm --json`,
+  jira-cli link delete 10234 --confirm
+  jira-cli link delete 10234 --confirm --json`,
 	Args: cobra.ExactArgs(1),
 	RunE: runLinkDelete,
 }
@@ -163,8 +163,8 @@ func init() {
 
 	// Legacy support: add --type flag to parent command for backward compatibility.
 	// This binds to the same linkType variable as linkCreateCmd, allowing:
-	//   jcfa link PROJ-1 PROJ-2 --type Blocks  (legacy, handled by runLinkLegacy)
-	//   jcfa link create PROJ-1 PROJ-2 --type Blocks  (new style)
+	//   jira-cli link PROJ-1 PROJ-2 --type Blocks  (legacy, handled by runLinkLegacy)
+	//   jira-cli link create PROJ-1 PROJ-2 --type Blocks  (new style)
 	linkCmd.Flags().StringVarP(&linkType, "type", "t", "Relates",
 		"type of link (for legacy usage)")
 
@@ -176,13 +176,13 @@ func init() {
 // Command implementations
 // -----------------------------------------------------------------------------
 
-// runLinkLegacy handles the legacy command format: jcfa link PROJ-1 PROJ-2 --type X
+// runLinkLegacy handles the legacy command format: jira-cli link PROJ-1 PROJ-2 --type X
 // It delegates to runLinkCreate if two issue keys are provided.
 func runLinkLegacy(cmd *cobra.Command, args []string) error {
 	// If exactly 2 args that look like issue keys, treat as legacy create
 	if len(args) == 2 && looksLikeIssueKey(args[0]) && looksLikeIssueKey(args[1]) {
 		if verbose {
-			fmt.Println("(Using legacy link syntax - consider using 'jcfa link create' instead)")
+			fmt.Println("(Using legacy link syntax - consider using 'jira-cli link create' instead)")
 		}
 		return runLinkCreate(cmd, args)
 	}

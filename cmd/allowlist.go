@@ -47,8 +47,8 @@ Displays:
 - List of currently allowed commands
 
 Examples:
-  jcfa allowlist status
-  jcfa allowlist status --json`,
+  jira-cli allowlist status
+  jira-cli allowlist status --json`,
 	RunE: runAllowlistStatus,
 }
 
@@ -62,8 +62,8 @@ This helps you understand which commands are safe for read-only operations
 and which ones modify data.
 
 Examples:
-  jcfa allowlist commands
-  jcfa allowlist commands --json`,
+  jira-cli allowlist commands
+  jira-cli allowlist commands --json`,
 	RunE: runAllowlistCommands,
 }
 
@@ -76,9 +76,9 @@ var allowlistCheckCmd = &cobra.Command{
 Returns exit code 0 if allowed, 1 if blocked.
 
 Examples:
-  jcfa allowlist check get
-  jcfa allowlist check create
-  jcfa allowlist check "comments list"`,
+  jira-cli allowlist check get
+  jira-cli allowlist check create
+  jira-cli allowlist check "comments list"`,
 	Args: cobra.ExactArgs(1),
 	RunE: runAllowlistCheck,
 }
@@ -275,7 +275,7 @@ func runAllowlistEnable(cmd *cobra.Command, args []string) {
 	fmt.Println("----------------------------------")
 	fmt.Println("Apply restriction to a single command only.")
 	fmt.Println()
-	fmt.Println("  JIRA_READONLY=1 jcfa get ABC-123")
+	fmt.Println("  JIRA_READONLY=1 jira-cli get ABC-123")
 	fmt.Println()
 
 	fmt.Println("TO DISABLE:")
@@ -288,8 +288,8 @@ func runAllowlistEnable(cmd *cobra.Command, args []string) {
 
 	fmt.Println("VERIFY:")
 	fmt.Println("-------")
-	fmt.Println("  jcfa allowlist status    # Check current status")
-	fmt.Println("  jcfa allowlist check get # Test specific command")
+	fmt.Println("  jira-cli allowlist status    # Check current status")
+	fmt.Println("  jira-cli allowlist check get # Test specific command")
 }
 
 // detectShell returns the user's current shell

@@ -26,9 +26,9 @@ var (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "jcfa",
+	Use:   "jira-cli",
 	Short: "Jira CLI for Agents - A CLI tool for Jira Cloud",
-	Long: `jcfa (Jira CLI for Agents) is a command-line interface for interacting with Jira Cloud.
+	Long: `jira-cli (Jira CLI for Agents) is a command-line interface for interacting with Jira Cloud.
 It provides commands for managing issues, projects, and more.
 Designed for AI-assisted workflows and developer productivity.`,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
@@ -39,7 +39,7 @@ Designed for AI-assisted workflows and developer productivity.`,
 		if cmd.Name() != "help" && cmd.Name() != "version" && cmd.Name() != "allowlist" && (cmd.Parent() == nil || cmd.Parent().Name() != "allowlist") {
 			// Build full command path for nested commands
 			cmdPath := cmd.Name()
-			if cmd.Parent() != nil && cmd.Parent().Name() != "jcfa" {
+			if cmd.Parent() != nil && cmd.Parent().Name() != "jira-cli" {
 				cmdPath = cmd.Parent().Name() + " " + cmd.Name()
 			}
 
@@ -59,12 +59,12 @@ Designed for AI-assisted workflows and developer productivity.`,
 			// Load from custom config file path
 			cfg, err = config.LoadFromPath(cfgFile)
 		} else {
-			// Load from default location (~/.jcfa/config.yaml)
+			// Load from default location (~/.jira-cli/config.yaml)
 			cfg, err = config.Load()
 		}
 
 		if err != nil {
-			return fmt.Errorf("failed to load config: %w\nRun 'jcfa configure' to set up your credentials", err)
+			return fmt.Errorf("failed to load config: %w\nRun 'jira-cli configure' to set up your credentials", err)
 		}
 
 		// Retrieve API token from keyring if configured
@@ -147,7 +147,7 @@ func containsAny(s string, substrs []string) bool {
 
 func init() {
 	// Global flags
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.jcfa/config.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.jira-cli/config.yaml)")
 	rootCmd.PersistentFlags().BoolVar(&jsonOutput, "json", false, "output in JSON format")
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 	rootCmd.PersistentFlags().BoolVar(&noColor, "no-color", false, "disable colored output")

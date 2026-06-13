@@ -29,30 +29,30 @@ Use flags to display additional sections like linked issues, subtasks, and comme
 
 Examples:
   # Default output (description + attachments)
-  jcfa get PROJ-123
+  jira-cli get PROJ-123
 
   # With linked issues
-  jcfa get PROJ-123 --links
-  jcfa get PROJ-123 -l
+  jira-cli get PROJ-123 --links
+  jira-cli get PROJ-123 -l
 
   # With subtasks
-  jcfa get PROJ-123 --subtasks
-  jcfa get PROJ-123 -s
+  jira-cli get PROJ-123 --subtasks
+  jira-cli get PROJ-123 -s
 
   # With comments
-  jcfa get PROJ-123 --comments
-  jcfa get PROJ-123 -c
+  jira-cli get PROJ-123 --comments
+  jira-cli get PROJ-123 -c
 
   # Combine multiple options
-  jcfa get PROJ-123 --links --comments
-  jcfa get PROJ-123 -lc
+  jira-cli get PROJ-123 --links --comments
+  jira-cli get PROJ-123 -lc
 
   # Show everything
-  jcfa get PROJ-123 --full
-  jcfa get PROJ-123 -f
+  jira-cli get PROJ-123 --full
+  jira-cli get PROJ-123 -f
 
   # JSON output
-  jcfa get PROJ-123 --json`,
+  jira-cli get PROJ-123 --json`,
 	Args: cobra.ExactArgs(1),
 	RunE: runGet,
 }
