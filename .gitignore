@@ -6,8 +6,9 @@ CLAUDE.md
 .new-features/
 
 # Binaries for programs and plugins
-jira-cli
-jcfa
+/jira-cli
+/jcfa
+/.opencode/skills/jira-cli/build/
 *.exe
 *.exe~
 *.dll
