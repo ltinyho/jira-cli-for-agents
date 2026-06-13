@@ -142,12 +142,122 @@ jira-cli transition IN-10514 "Done"
 ### 评论与链接
 
 ```bash
-# 添加评论
+# 添加评论（简单模式）
 jira-cli comment IN-10514 "排查完成，根因是配置项 X"
 
 # 链接两个 issue
 jira-cli link create IN-1001 IN-1002 --type Blocks
 ```
+
+### 评论管理（comments 子命令）
+
+`comment` 是简易别名；完整能力在 `comments` 子命令下：
+
+```bash
+# 列出 issue 的所有评论
+jira-cli comments list IN-10514
+
+# 限制数量 + 倒序（最新在前）
+jira-cli comments list IN-10514 --limit 10 --order -created
+
+# JSON 输出（AI agent 友好）
+jira-cli comments list IN-10514 --json
+
+# 添加评论（推荐，明确语义）
+jira-cli comments add IN-10514 "已修复，根因是配置项 X"
+
+# 获取单个评论（按 ID）
+jira-cli comments get IN-10514 10001
+
+# 更新自己发的评论
+jira-cli comments update IN-10514 10001 "更新后的内容"
+
+# 删除评论（必须 --confirm 防误删）
+jira-cli comments delete IN-10514 10001 --confirm
+```
+
+> 注意：只有评论作者本人或管理员可以 update/delete。
+
+### 附件管理（attachment）
+
+```bash
+# 列出 issue 的所有附件
+jira-cli attachment list IN-10514
+jira-cli attachment list IN-10514 --json   # JSON 输出
+
+# 上传单个/多个文件
+jira-cli attachment upload IN-10514 design.pdf
+jira-cli attachment upload IN-10514 file1.pdf file2.png file3.docx
+
+# 大文件（>1MB）自动显示进度条；--no-progress 关闭（适合 CI）
+jira-cli attachment upload IN-10514 large.zip --no-progress
+
+# 按文件名下载（默认当前目录）
+jira-cli attachment download IN-10514 design.pdf
+
+# 按 ID 下载
+jira-cli attachment download IN-10514 10001
+
+# 下载到指定目录 / 自定义文件名
+jira-cli attachment download IN-10514 design.pdf --output ./downloads/
+jira-cli attachment download IN-10514 design.pdf --output custom-name.pdf
+
+# 删除附件（按 ID，需 --confirm）
+jira-cli attachment delete 10001 --confirm
+```
+
+### 沙箱与权限（allowlist）
+
+为 AI agent 或 CI 脚本提供只读 / 受限模式：
+
+```bash
+# 查看当前沙箱状态
+jira-cli allowlist status
+jira-cli allowlist status --json
+
+# 列出所有命令的读/写分类
+jira-cli allowlist commands
+jira-cli allowlist commands --json
+
+# 检查某个命令是否被允许（退出码 0=允许，1=拒绝）
+jira-cli allowlist check get          # OK
+jira-cli allowlist check create       # 失败（写命令）
+
+# 在脚本中使用
+if jira-cli allowlist check create; then
+    jira-cli create --template story --data story.json
+else
+    echo "create command is blocked by sandbox"
+fi
+
+# 启用只读模式的说明
+jira-cli allowlist enable
+```
+
+**启用方式**（通过环境变量）：
+
+```bash
+# 1. 只读模式：仅允许 list/get/search/fields/version/help 等读命令
+export JIRA_READONLY=1
+jira-cli get IN-10514         # OK
+jira-cli create ...            # 拒绝
+
+# 2. 显式白名单：只允许指定的命令
+export JIRA_COMMAND_ALLOWLIST="get,search,list,fields"
+jira-cli get IN-10514         # OK
+jira-cli create ...            # 拒绝
+jira-cli list ...              # 拒绝（不在白名单）
+
+# 3. 取消所有限制
+unset JIRA_READONLY JIRA_COMMAND_ALLOWLIST
+```
+
+**读/写命令分类**：
+
+| 类别 | 命令 |
+|---|---|
+| 📖 读（允许 read-only 模式） | `get`, `search`, `list`, `fields`, `version`, `help`, `attachment list`, `comments list/get`, `link list/types` |
+| ✏️ 写（read-only 模式拒绝） | `create`, `update`, `transition`, `batch`, `comment(s) add/update/delete`, `link create/delete`, `attachment upload/delete`, `configure`, `template` |
 
 ## AI Agent 工作流推荐
 
@@ -203,6 +313,11 @@ jira-cli --help
 jira-cli list --help
 jira-cli search --help
 jira-cli create --help
+
+# 详细子命令
+jira-cli comments --help            # 评论管理
+jira-cli attachment --help          # 附件管理
+jira-cli allowlist --help           # 沙箱管理
 
 # 查看命令分类（read-only / write）
 jira-cli allowlist commands
